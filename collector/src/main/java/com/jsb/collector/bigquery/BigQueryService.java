@@ -18,12 +18,12 @@ import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.TableResult;
 
 @Service
-public class BigQuery_Service {
+public class BigQueryService {
 
 	private static String path_credentials = "/home/javi/Desktop/Workspaces/Java/collector/collector-properties.json";
 	private BigQuery bigquery;
 
-	public BigQuery_Service() throws Exception {
+	public BigQueryService() throws Exception {
 		// Instantiate service
 		this.bigquery = BigQueryOptions.newBuilder().setProjectId("tae-collector")
 				.setCredentials(ServiceAccountCredentials.fromStream(new FileInputStream(path_credentials))).build()
