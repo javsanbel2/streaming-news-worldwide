@@ -1,7 +1,9 @@
-package com.jsb.collector;
+package com.jsb.collector.bigquery;
 
 import java.io.FileInputStream;
 import java.util.UUID;
+
+import org.springframework.stereotype.Service;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.BigQuery;
@@ -12,6 +14,7 @@ import com.google.cloud.bigquery.JobInfo;
 import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.TableResult;
 
+@Service
 public class BigQuery_Service {
 
 	private static String path_credentials = "/home/javi/Desktop/Workspaces/Java/collector/collector-properties.json";

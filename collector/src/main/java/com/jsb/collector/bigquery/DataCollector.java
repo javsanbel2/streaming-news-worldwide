@@ -1,4 +1,4 @@
-package com.jsb.collector;
+package com.jsb.collector.bigquery;
 
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.TableResult;
