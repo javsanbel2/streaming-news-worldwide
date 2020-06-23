@@ -1,47 +1,37 @@
 package com.jsb.collector;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-import com.google.cloud.bigquery.FieldValueList;
-import com.google.cloud.bigquery.TableResult;
-import com.jsb.collector.bigquery.BigQueryService;
-import com.jsb.collector.kafka.Producer;
+import org.codehaus.jettison.json.JSONObject;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DataCollector {
 
-	private final Producer producer;
-
-	@Autowired
-	DataCollector(Producer producer) {
-		this.producer = producer;
+	public static void main(String[] args) {
+		// Getting datetime from now
+		String date = LocalDate.now().toString();
+		String time = LocalTime.now().minusHours(10).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		String threshold_datetime = date + "T" + time;
+		System.out.println(threshold_datetime);
+		
+		// Topic to search
+		String topic = "empowerment AND woman";
+		
+		// Request information
+		NewsService newsService = new NewsService();
+		JSONObject res = newsService.requestEverything(topic, threshold_datetime);
+		System.out.println(res);
 	}
-
-	// *********************
-	// Getting GitHub Dataset
-	// *********************
-	public void getGitHubDataset() {
-		try {
-			String queryString = "SELECT repository.has_downloads FROM `bigquery-public-data.samples.github_nested` LIMIT 5;";
-			BigQueryService bigquery = new BigQueryService();
-
-			TableResult res = bigquery.query(queryString);
-			
-			for (FieldValueList row : res.iterateAll()) {
-				System.out.println(row);
-				this.producer.sendMessage(row.toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getCause());
-			throw new RuntimeException(e.getMessage());
-		}
+	
+	/**
+	 * Method to get streaming data from a certain list of keywords (topic). This method will
+	 * call himself every 30 minutes to get more information. This news will be always sorted by date
+	 * @param topic
+	 */
+	public void getStreamingDataFromCertainTopic(String topic) {
 	}
-
-	public void getHackerNewsDataset() {
-		// .. some queries to get dataset
-	}
-
-//	      String url = row.get("url").getStringValue();
-//	      long viewCount = row.get("view_count").getLongValue();
-//	      System.out.printf("url: %s views: %d%n", url, viewCount);
+	
 }
