@@ -48,3 +48,23 @@ collector/*.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Scala
+consumer/*.class
+consumer/*.log
+
+# sbt specific
+consumer/.cache/
+consumer/.history/
+consumer/.lib/
+consumer/dist/*
+consumer/target/
+consumer/lib_managed/
+consumer/src_managed/
+consumer/project/boot/
+consumer/project/plugins/project/
+
+# Scala-IDE specific
+consumer/.scala_dependencies
+consumer/.worksheet
+consumer/.idea
