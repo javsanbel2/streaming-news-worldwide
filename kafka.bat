@@ -9,15 +9,15 @@ if [ $1 == "help" ]; then
 fi
 if [ $1 == "list" ]; then
 	echo "Listing topics. No params"
-	$route/bin/kafka-topics.sh --list --zookeeper localhost:2181
+	${lines[1]}/bin/kafka-topics.sh --list --zookeeper localhost:2181
 fi
 
 if [ $1 == "create" ]; then
 	echo "Creating topic. Param1*(topic)"
-	$route/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic $2
+	${lines[1]}/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic $2
 fi
 
 if [ $1 == "listen" ]; then
 	echo "Listening one topic. Param1*(topic)"
-	$route/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $2 --from-beginning
+	${lines[1]}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $2 --from-beginning
 fi
