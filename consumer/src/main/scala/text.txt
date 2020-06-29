@@ -1,0 +1,19 @@
+  val sparkConf = new SparkConf().setMaster("local[*]").setAppName("textConsume")
+  val sc = new SparkContext(sparkConf)
+  val ssc = new StreamingContext(sc, Seconds(1)).sparkContext.setLogLevel("ERROR")
+
+  val kafkaConfig = Map[String, Object](
+      "client.dns.lookup" -> "resolve_canonical_bootstrap_servers_only",
+      "bootstrap.servers" -> "localhost:9092",
+      "key.deserializer" -> classOf[StringDeserializer],
+      "value.deserializer" -> classOf[StringDeserializer],
+      "group.id" -> "kafkaSparkConsumer",
+      "auto.offset.reset" -> "latest",
+      "enable.auto.commit" -> (false: java.lang.Boolean)
+  )
+  val kafkaRawStream =
+    KafkaUtils.createDirectStream[String, String](
+        ssc,
+        LocationStrategies.PreferConsistent,
+        ConsumerStrategies.Subscribe[String, String](kafkaTopics, kafkaConfig)
+    )

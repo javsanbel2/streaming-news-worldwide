@@ -21,3 +21,12 @@ if [ $1 == "listen" ]; then
 	echo "Listening one topic. Param1*(topic)"
 	${lines[1]}/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $2 --from-beginning
 fi
+if [ $1 == "write" ]; then
+	echo "Writing in one topic. Param1*(topic)"
+	${lines[1]}/bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic $2
+fi
+if [ $1 == "stop" ]; then
+	echo "Stopping servers"
+	${lines[1]}/bin/kafka-server-stop.sh
+	${lines[1]}/bin/zookeeper-server-stop.sh
+fi
