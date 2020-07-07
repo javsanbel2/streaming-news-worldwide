@@ -5,23 +5,11 @@ import play.api.libs.json._
 
 object Testing {
   def main(args: Array[String]): Unit = {
-    println()
-    val lines = Source.fromFile("/home/javi/Desktop/Workspaces/Java/consumer/src/main/scala/text.txt").getLines.toList
-    val line: String = lines(0)
+    val h = Array("z", "y")
+    val a = Array("1", "2")
+    val b = Array("a", "b")
 
-    val json: JsValue = Json.parse(line)
-    val titles = (json \\ "title").map(_.as[String])
-    val descriptions = (json \\ "description").map(_.as[String])
-    println("Title")
-    println(titles(1))
-    println("Descrption")
-    println(descriptions(1))
-    println("+++++++ Result ++++++++++++")
-    val values = titles.zip(descriptions)
-    println(values.length)
-    println(values(0))
-    println("==============")
-    println(values)
+    println((h,a,b).zipped.toList)
 
 //    println(Some(values))
 //    println(descriptions(0))

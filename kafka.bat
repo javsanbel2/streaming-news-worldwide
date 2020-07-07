@@ -5,7 +5,7 @@ route=${lines[1]}
 
 if [ $1 == "help" ]; then
 	echo "Commands available"
-	echo "list, create, listen"
+	echo "list, create, listen, write, stop, collector"
 fi
 if [ $1 == "list" ]; then
 	echo "Listing topics. No params"
@@ -28,5 +28,11 @@ fi
 if [ $1 == "stop" ]; then
 	echo "Stopping servers"
 	${lines[1]}/bin/kafka-server-stop.sh
-	${lines[1]}/bin/zookeeper-server-stop.sh
+	${lines[3]}/bin/stop-hbase.sh
 fi
+if [ $1 == "collector" ]; then
+        echo "Running server spring collector"
+	cd collector
+        eval "./mvnw spring-boot:run"
+fi
+

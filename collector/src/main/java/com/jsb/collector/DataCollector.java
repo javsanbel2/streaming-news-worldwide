@@ -38,7 +38,7 @@ public class DataCollector {
 	 * @param topic
 	 */
 	//1800000 ms = 30min
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 100000)
 	public void getStreamingDataFromCertainQuery() {
 		log.info("Requesting data to NewsAPI" + this.queryFromProperties);
 		JSONObject data = requestData(this.queryFromProperties);
@@ -58,7 +58,7 @@ public class DataCollector {
 	 */
 	public JSONObject requestData(String query) {
 		// Getting datetime from now and parse
-		String date = LocalDate.now().toString();
+		String date = LocalDate.now().minusDays(1).toString();
 		String time = LocalTime.now().minusHours(2).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		String threshold_datetime = date + "T" + time;
 		
