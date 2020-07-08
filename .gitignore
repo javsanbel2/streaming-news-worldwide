@@ -64,6 +64,8 @@ consumer/src_managed/
 consumer/project/boot/
 consumer/project/plugins/project/
 
+spark-warehouse/
+metastore_db/
 # Scala-IDE specific
 consumer/.scala_dependencies
 consumer/.worksheet

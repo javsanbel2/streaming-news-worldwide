@@ -1,19 +1,18 @@
-import java.io.File
-
-import ch.qos.logback.classic.{Level, Logger}
+import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
-import org.slf4j.LoggerFactory
 
 object Hive {
-  def main(args: Array[String]): Unit = {
-    // Set logger to WARN
-    LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf[Logger].setLevel(Level.WARN)
-    // Hive
-    val warehouseLocation = new File("spark-warehouse").getAbsolutePath
-    val spark = SparkSession.builder.appName("hiveapp").config("spark.sql.warehouse.dir", warehouseLocation).enableHiveSupport().getOrCreate()
-    import spark.implicits._
-    import spark.sql
+  // Method to save to Hive
+  def saveToHive(sparkSession: SparkSession, rdd: RDD[(String, String, String)], tableName: String): Unit = {
+    import sparkSession.implicits._
 
-    sql("CREATE TABLE IF NOT EXISTS news (key INT, value STRING) USING hive")
+    val newsDataFrame = rdd.toDF()
+    newsDataFrame.createOrReplaceTempView("newstest")
+
+    try {
+      newsDataFrame.write.mode("append").saveAsTable(tableName)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
   }
 }

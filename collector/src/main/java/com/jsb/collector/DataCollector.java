@@ -23,7 +23,7 @@ public class DataCollector {
 	
 	@Value("${api.query}")
     private String queryFromProperties;
-
+	
 	@Autowired
 	private NewsService newsService;
 	
@@ -37,8 +37,7 @@ public class DataCollector {
 	 * call himself every 30 minutes to get more information. This news will be always sorted by date
 	 * @param topic
 	 */
-	//1800000 ms = 30min
-	@Scheduled(fixedRate = 100000)
+	@Scheduled(fixedRate = 300000) // Every 5 min
 	public void getStreamingDataFromCertainQuery() {
 		log.info("Requesting data to NewsAPI" + this.queryFromProperties);
 		JSONObject data = requestData(this.queryFromProperties);

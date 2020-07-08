@@ -2,6 +2,8 @@ package com.jsb.collector;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
+
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -49,7 +51,8 @@ class CollectorApplicationTests {
 	@Test
 	void requestEverything2() throws JSONException {
 		// Run method
-		JSONObject data = newsService.requestEverything("bitcoin", "2020-05-24");
+		String dateMinus20days = LocalDate.now().minusDays(20).toString();
+		JSONObject data = newsService.requestEverything("bitcoin", dateMinus20days);
 		String status = data.get("status").toString();
 		Boolean itWorks = status.contentEquals("ok");
 		assertTrue(itWorks);
@@ -59,7 +62,8 @@ class CollectorApplicationTests {
 	@Test
 	void requestEverything3() throws JSONException {
 		// Run method
-		JSONObject data = newsService.requestEverything("bitcoin", "2020-05-24", "publishedAt");
+		String dateMinus20days = LocalDate.now().minusDays(20).toString();
+		JSONObject data = newsService.requestEverything("bitcoin", dateMinus20days, "publishedAt");
 		String status = data.get("status").toString();
 		Boolean itWorks = status.contentEquals("ok");
 		assertTrue(itWorks);

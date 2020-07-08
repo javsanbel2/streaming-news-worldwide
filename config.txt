@@ -1,0 +1,12 @@
+Kafka-path
+/home/javi/Desktop/Workspaces/kafka_2.12-2.5.0
+HBase-path
+/home/javi/Desktop/Workspaces/hbase-2.2.4
+Topic-name
+bitcoin
+Query-to-search-in-APIs
+bitcoin
+Interval-of-minutes-between-each-request-in-Consumer(min)
+2
+Tables-name
+bitcoin

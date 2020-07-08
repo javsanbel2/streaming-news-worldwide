@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lines=(`cat "servers.txt"`)
+lines=(`cat "config.txt"`)
 route=${lines[1]}
 
 if [ $1 == "help" ]; then
