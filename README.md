@@ -6,11 +6,11 @@ First project getting into data engineering. We will get a big amount of streami
 ## Structure
 
 > + collector: Get information from APIs and introduce this data into Kafka Cluster  
-+ consumer: Receive information and process via Spark streaming and save it into Hive & HBase  
-- start.sh : Script to start project  
-- test.sh: Script to run tests in both projects  
-- scripts.sh: Scripts to manage kafka and stop servers  
-- config.txt: Configuration to apply in the project (query to run, time intervals...)  
+> + consumer: Receive information and process via Spark streaming and save it into Hive & HBase  
+> - start.sh : Script to start project  
+> - test.sh: Script to run tests in both projects  
+> - scripts.sh: Scripts to manage kafka and stop servers  
+> - config.txt: Configuration to apply in the project (query to run, time intervals...)  
   
 ## Run project
 
