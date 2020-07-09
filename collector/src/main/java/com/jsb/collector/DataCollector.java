@@ -57,12 +57,14 @@ public class DataCollector {
 	 */
 	public JSONObject requestData(String query) {
 		// Getting datetime from now and parse
-		String date = LocalDate.now().minusDays(1).toString();
-		String time = LocalTime.now().minusHours(2).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-		String threshold_datetime = date + "T" + time;
+		String date = LocalDate.now().toString();
+		LocalTime time = LocalTime.now().minusHours(1).minusMinutes(30);
+		
+		String from = date + "T" + time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		String to = date + "T" + time.plusMinutes(5).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		
 		// Request information
-		JSONObject res = newsService.requestEverything(query, threshold_datetime);
+		JSONObject res = newsService.requestEverything(query, from, to);
 
 		return res;
 	}

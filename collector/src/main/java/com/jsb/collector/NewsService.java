@@ -34,11 +34,11 @@ public class NewsService {
 		return get(url);
 	}
 	
-	public JSONObject requestEverything(String query, String from) {
+	public JSONObject requestEverything(String query, String from, String to) {
 		String url = "";
 		try {
 			String query_encoded = URLEncoder.encode(query, "UTF-8");
-			url = API_URL + "everything?q=" + query_encoded + "&from=" + from + API_KEY;
+			url = API_URL + "everything?q=" + query_encoded + "&from=" + from + "&to=" + to + API_KEY;
 			System.out.println(url);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,11 +46,11 @@ public class NewsService {
 		return get(url);
 	}
 	
-	public JSONObject requestEverything(String query, String from, String sort) {
+	public JSONObject requestEverything(String query, String from, String to, String sort) {
 		String url = "";
 		try {
 			String query_encoded = URLEncoder.encode(query, "UTF-8");
-			url = API_URL + "everything?q=" + query_encoded + "&from=" + from + "&sortBy=" + sort + API_KEY;
+			url = API_URL + "everything?q=" + query_encoded + "&from=" + from + "&to=" + to + "&sortBy=" + sort + API_KEY;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

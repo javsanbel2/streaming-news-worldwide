@@ -1,6 +1,9 @@
 package com.jsb.collector.kafka;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -35,6 +38,11 @@ public class KafkaProducerService {
 	public void sendKafkaMessage(String topic, String payload) {
 		logger.info("Sending Kafka message: " + payload);
 		this.producer.send(new ProducerRecord<>(topic, payload));
+	}
+	
+	public void sendKafkaMessageTest(String topic, String payload) throws InterruptedException, ExecutionException, TimeoutException {
+		logger.info("Sending Kafka message: " + payload);
+		this.producer.send(new ProducerRecord<>(topic, payload)).get(1, TimeUnit.SECONDS);
 	}
 
 	/**
