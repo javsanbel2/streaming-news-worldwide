@@ -20,4 +20,5 @@ Get into the folder and:
 ./run.sh
 
 
-Documentation: [Google doc](https://docs.google.com/document/d/1nfjselzvqzASptw_VASdLWIO7K77BOrIVmp49HHik2g/edit?usp=sharing)
+Documentation v1 (Updated) : [Google slides](https://docs.google.com/presentation/d/1AnSjBWKitK9Y74C_RbV58FL3HV-u5VgIj4SbMPWP84o/edit?usp=sharing)
+Documentation v2 : [Google doc](https://docs.google.com/document/d/1nfjselzvqzASptw_VASdLWIO7K77BOrIVmp49HHik2g/edit?usp=sharing)
