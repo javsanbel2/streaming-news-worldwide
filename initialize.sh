@@ -18,6 +18,7 @@ echo "api.query="${lines[7]} >> $appProperties
 
 echo "Creating topic in kafka"
 ./scripts.sh create newsapi
+./scripts.sh create test
 
 echo "Creating table in HBase"
 echo "create '${lines[11]}','cf'" | ${lines[3]}/bin/hbase shell -n

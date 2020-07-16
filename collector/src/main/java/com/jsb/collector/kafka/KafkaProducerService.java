@@ -2,11 +2,13 @@ package com.jsb.collector.kafka;
 
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +29,7 @@ public class KafkaProducerService {
 	private static final Logger logger = LogManager.getLogger(KafkaProducerService.class);
 
 	private KafkaProducer<String, String> producer = new KafkaProducer<>(createProducerProperties());
-
+	
 	/**
 	 * Function to send a message to Kafka
 	 * 
@@ -43,6 +45,10 @@ public class KafkaProducerService {
 	public void sendKafkaMessageTest(String topic, String payload) throws InterruptedException, ExecutionException, TimeoutException {
 		logger.info("Sending Kafka message: " + payload);
 		this.producer.send(new ProducerRecord<>(topic, payload)).get(1, TimeUnit.SECONDS);
+	}
+	
+	public Future<RecordMetadata> sendKafkaMessageTest2(String topic, String payload) {
+		return this.producer.send(new ProducerRecord<>(topic, payload));
 	}
 
 	/**

@@ -3,18 +3,31 @@ package com.jsb.collector;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Event;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.zip.CRC32;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.common.record.Record;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -106,7 +119,7 @@ class CollectorApplicationTests {
 	// ***********************************
 
 	@Test
-	void checkKafkaWorks() {
+	void sendAndCheckMessageKafka() {
 		StreamsBuilder builder = new StreamsBuilder();
 		builder.stream("input-topic").to("output-topic");
 		Topology topology = builder.build();
@@ -157,7 +170,7 @@ class CollectorApplicationTests {
 
 		final ArrayList<String> events = new ArrayList<>();
 
-		org.awaitility.Awaitility.await().atMost(15, TimeUnit.SECONDS).untilAsserted(() -> {
+		org.awaitility.Awaitility.await().atMost(4, TimeUnit.SECONDS).untilAsserted(() -> {
 			final ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(3));
 			this.producer.sendKafkaMessageTest("test", "hello");
 			for (final ConsumerRecord<String, String> record : records)
@@ -166,6 +179,46 @@ class CollectorApplicationTests {
 			assertTrue(1 < events.size());
 			consumer.close();
 		});
+	}
+
+	@Test
+	void checkCrcKafka() throws InterruptedException, ExecutionException, IOException {
+		String res = "Hello";
+		Future<RecordMetadata> message = this.producer.sendKafkaMessageTest2("testCrc", res);
+		
+		CRC32 crc = new CRC32();
+		crc.update(res.getBytes());
+		long value = crc.getValue();
+		
+		// Create log file
+		this.createFile("logCrc");
+		// Write log file
+		this.writeFile("logCrc", Arrays.asList(String.valueOf(value)));
+	}
+
+	@Test
+	void checkOrderMessagesKafka() throws IOException {
+		List<String> messages = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
+		
+		for (String message: messages) {
+			this.producer.sendKafkaMessage("testOrder", message);
+		}
+
+		// Create log file
+		this.createFile("logOrder");
+		// Write log file
+		this.writeFile("logOrder", messages);
+	}
+	
+	void createFile(String filename) throws IOException {
+		String pathfile = "../tests_output/" + filename + ".txt";
+		new File(pathfile);
+		Path path = Paths.get(pathfile);
+		Files.write(path, Arrays.asList("Log file to test consumer/producer"));
+	}
+	void writeFile(String filename, List<String> messages) throws IOException {
+		Path path = Paths.get("../tests_output/" + filename + ".txt");
+		Files.write(path, messages, StandardOpenOption.APPEND);
 	}
 
 	// ***********************************

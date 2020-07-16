@@ -14,7 +14,7 @@ fi
 
 if [ $1 == "create" ]; then
 	echo "Creating topic. Param1*(topic)"
-	${lines[1]}/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic $2
+	${lines[1]}/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2 --topic $2
 fi
 
 if [ $1 == "listen" ]; then
