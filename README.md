@@ -3,6 +3,8 @@
 
 First project getting into data engineering. We will get a big amount of streaming data from the NewsAPI. We will store this requested data into a Kafka cluster through a Java spring boot application. After we will process this data with Spark and store in HBase and Hive.
 
+![Pipeline](https://i.ibb.co/NLr0jYh/General-pipeline-1.png)
+
 ## Structure
 
 > + collector: Get information from APIs and introduce this data into Kafka Cluster  
